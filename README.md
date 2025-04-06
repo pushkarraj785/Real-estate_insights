@@ -187,12 +187,6 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-## 📬 Contact
-
-Your Name - your.email@example.com
-
-Project Link: [https://github.com/yourusername/real-estate-insights](https://github.com/yourusername/real-estate-insights)
-
 ## 🙏 Acknowledgments
 
 - Google's Gemini AI model for powering the insights
