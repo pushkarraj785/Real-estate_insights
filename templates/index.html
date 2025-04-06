@@ -1,0 +1,448 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Real Estate Insights - AI-Powered Analysis</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            max-width: 1000px; 
+            margin: 0 auto; 
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container { 
+            border: 1px solid #ccc; 
+            border-radius: 8px; 
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .result { 
+            margin-top: 20px; 
+            padding: 20px; 
+            border-left: 4px solid #4CAF50; 
+            background-color: #f9f9f9; 
+            display: none;
+            border-radius: 5px;
+        }
+        button { 
+            background-color: #4CAF50; 
+            color: white; 
+            padding: 10px 18px; 
+            border: none; 
+            border-radius: 4px; 
+            cursor: pointer; 
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        button:hover { 
+            background-color: #45a049; 
+        }
+        select, textarea { 
+            width: 100%; 
+            padding: 12px; 
+            margin: 8px 0; 
+            display: inline-block; 
+            border: 1px solid #ccc; 
+            border-radius: 4px; 
+            box-sizing: border-box; 
+            font-size: 16px;
+        }
+        .loader {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #3498db;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 2s linear infinite;
+            display: none;
+            margin: 20px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .examples {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f5f5f5;
+            border-radius: 5px;
+        }
+        .example-query {
+            cursor: pointer;
+            color: #0066cc;
+            margin-bottom: 8px;
+            padding: 5px;
+            transition: background-color 0.2s;
+        }
+        .example-query:hover {
+            background-color: #e6f2ff;
+        }
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            margin-right: 5px;
+            border-radius: 5px 5px 0 0;
+        }
+        .tab.active {
+            background-color: #4CAF50;
+            color: white;
+            border-bottom: none;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .data-status {
+            display: flex;
+            justify-content: space-between;
+            background-color: #e8f4fe;
+            padding: 10px 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+            font-size: 14px;
+        }
+        .data-status-fresh {
+            color: green;
+        }
+        .data-status-stale {
+            color: orange;
+        }
+        .query-type-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-left: 10px;
+            background-color: #eee;
+            color: #333;
+        }
+        .refresh-button {
+            background-color: #3498db;
+            margin-left: 10px;
+        }
+        .refresh-button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <h1>Real Estate Insights - AI-Powered Analysis</h1>
+    
+    <div class="tabs">
+        <div class="tab active" data-tab="query">Ask a Question</div>
+        <div class="tab" data-tab="data">Data Status</div>
+        <div class="tab" data-tab="about">About</div>
+    </div>
+    
+    <div class="tab-content active" id="query-tab">
+        <div class="container">
+            <h3>Ask anything about real estate in India</h3>
+            
+            <div class="data-status" id="query-data-status">
+                <span>Checking data status...</span>
+            </div>
+            
+            <label for="query">Your Question:</label>
+            <textarea id="query" rows="4" placeholder="Example: Estimate the price of a 3 BHK apartment in Koramangala, Bangalore with 1500 sq.ft area."></textarea>
+            
+            <div class="examples">
+                <h4>Example Questions:</h4>
+                <div class="example-query" onclick="useExample(this.innerText)">Estimate the price of a 3 BHK apartment in Koramangala, Bangalore with 1500 sq.ft area.</div>
+                <div class="example-query" onclick="useExample(this.innerText)">What would a 2 BHK flat in Andheri, Mumbai cost if it's around 950 sq.ft?</div>
+                <div class="example-query" onclick="useExample(this.innerText)">What's the price trend for properties in Vasant Kunj, Delhi over the last year?</div>
+                <div class="example-query" onclick="useExample(this.innerText)">Compare investment potential between Whitefield and HSR Layout in Bangalore.</div>
+                <div class="example-query" onclick="useExample(this.innerText)">What are the stamp duty charges for property registration in Delhi?</div>
+                <div class="example-query" onclick="useExample(this.innerText)">Is it a good time to invest in a 2 BHK flat in Bandra, Mumbai?</div>
+            </div>
+            
+            <button onclick="getAnswer()">Get Insights</button>
+            
+            <div id="loader" class="loader"></div>
+            
+            <div id="result" class="result">
+                <h3>Analysis Result <span id="query-type-badge" class="query-type-badge">Price Prediction</span></h3>
+                
+                <!-- Dynamic result sections will appear based on query type -->
+                <div id="result-content"></div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="tab-content" id="data-tab">
+        <div class="container">
+            <h3>Real Estate Data Status</h3>
+            <p>Here you can check the freshness of the data and trigger data updates.</p>
+            
+            <div id="data-status-container">
+                <!-- Data status for each city will be displayed here -->
+                <div class="data-status">Loading data status...</div>
+            </div>
+            
+            <button onclick="refreshAllData()" class="refresh-button">Refresh All Data</button>
+            <div id="refresh-status"></div>
+        </div>
+    </div>
+    
+    <div class="tab-content" id="about-tab">
+        <div class="container">
+            <h3>About This Project</h3>
+            <p>This application uses real-time data from property websites and government sources to provide AI-powered insights about the Indian real estate market.</p>
+            
+            <h4>Features:</h4>
+            <ul>
+                <li>Real-time property price prediction</li>
+                <li>Market trend analysis</li>
+                <li>Property comparison</li>
+                <li>Investment advice</li>
+                <li>Regulatory information</li>
+            </ul>
+            
+            <h4>Data Sources:</h4>
+            <p>We collect data from multiple sources including:</p>
+            <ul>
+                <li>Commercial property websites (MagicBricks, Housing.com, etc.)</li>
+                <li>Government property registration data</li>
+                <li>Historical transaction records</li>
+            </ul>
+            
+            <h4>How it works:</h4>
+            <p>Our system collects and analyzes real-time property data, which is then processed by an advanced AI model to provide accurate insights and predictions.</p>
+        </div>
+    </div>
+
+    <script>
+        // Tab functionality
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                this.classList.add('active');
+                document.getElementById(this.getAttribute('data-tab') + '-tab').classList.add('active');
+                
+                // If data tab is selected, load data status
+                if (this.getAttribute('data-tab') === 'data') {
+                    loadAllDataStatus();
+                }
+            });
+        });
+        
+        // Load data status on page load
+        window.addEventListener('load', function() {
+            checkDataStatus('Mumbai');
+            checkDataStatus('Bangalore');
+            checkDataStatus('Delhi');
+        });
+        
+        function useExample(text) {
+            document.getElementById('query').value = text;
+        }
+        
+        function getAnswer() {
+            const query = document.getElementById('query').value;
+            if (!query) {
+                alert('Please enter a query');
+                return;
+            }
+            
+            document.getElementById('loader').style.display = 'block';
+            document.getElementById('result').style.display = 'none';
+            
+            fetch('/query', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ query: query })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('loader').style.display = 'none';
+                document.getElementById('result').style.display = 'block';
+                
+                // Set the query type badge
+                const queryType = data.query_type || 'general';
+                document.getElementById('query-type-badge').innerText = 
+                    queryType.replace('_', ' ').replace(/\w/g, l => l.toUpperCase());
+                
+                // Clear previous result
+                document.getElementById('result-content').innerHTML = '';
+                
+                if (data.error) {
+                    document.getElementById('result-content').innerHTML = `<p class="error">${data.error}</p>`;
+                    if (data.raw_response) {
+                        document.getElementById('result-content').innerHTML += `<p>${data.raw_response}</p>`;
+                    }
+                } else {
+                    // Display different content based on query type
+                    switch(queryType) {
+                        case 'price_prediction':
+                            document.getElementById('result-content').innerHTML = `
+                                <p><strong>Predicted Price:</strong> ₹${data.predicted_price_lakhs} lakhs</p>
+                                <p><strong>Price Range:</strong> ${data.predicted_price_range || 'N/A'}</p>
+                                <h4>Explanation:</h4>
+                                <p>${data.explanation}</p>
+                            `;
+                            break;
+                        case 'market_trend':
+                            document.getElementById('result-content').innerHTML = `
+                                <p><strong>Market Direction:</strong> ${data.market_direction}</p>
+                                <p><strong>Expected Annual Growth:</strong> ${data.expected_annual_growth_percent}%</p>
+                                <h4>Analysis:</h4>
+                                <p>${data.analysis}</p>
+                            `;
+                            break;
+                        case 'comparison':
+                            document.getElementById('result-content').innerHTML = `
+                                <h4>Comparison:</h4>
+                                <pre>${data.comparison_table}</pre>
+                                <p><strong>Recommendation:</strong> ${data.recommendation}</p>
+                                <h4>Reasoning:</h4>
+                                <p>${data.reasoning}</p>
+                            `;
+                            break;
+                        case 'investment_advice':
+                            document.getElementById('result-content').innerHTML = `
+                                <p><strong>Investment Recommendation:</strong> ${data.investment_recommendation}</p>
+                                <p><strong>Projected Annual ROI:</strong> ${data.projected_annual_roi_percent}%</p>
+                                <h4>Investment Analysis:</h4>
+                                <p>${data.investment_analysis}</p>
+                            `;
+                            break;
+                        case 'regulation':
+                            document.getElementById('result-content').innerHTML = `
+                                <h4>Legal Information:</h4>
+                                <p>${data.legal_information}</p>
+                                <h4>Practical Steps:</h4>
+                                <p>${data.practical_steps}</p>
+                                <p class="disclaimer"><i>${data.disclaimer}</i></p>
+                            `;
+                            break;
+                        default:
+                            document.getElementById('result-content').innerHTML = `
+                                <h4>Answer:</h4>
+                                <p>${data.answer}</p>
+                            `;
+                            if (data.references) {
+                                document.getElementById('result-content').innerHTML += `
+                                    <h4>References:</h4>
+                                    <p>${data.references}</p>
+                                `;
+                            }
+                    }
+                }
+            })
+            .catch(error => {
+                document.getElementById('loader').style.display = 'none';
+                alert('Error: ' + error.message);
+            });
+        }
+        
+        function checkDataStatus(city) {
+            fetch(`/data_status?city=${city}`)
+                .then(response => response.json())
+                .then(data => {
+                    // Update the UI with data status
+                    let statusHTML = '';
+                    if (data.status === 'no_data') {
+                        statusHTML = `<div class="data-status">
+                            <span>${data.city}: </span>
+                            <span class="data-status-stale">No data available</span>
+                            <button onclick="refreshData('${data.city}')" class="refresh-button">Refresh</button>
+                        </div>`;
+                    } else {
+                        const freshClass = data.is_fresh ? 'data-status-fresh' : 'data-status-stale';
+                        statusHTML = `<div class="data-status">
+                            <span>${data.city}: </span>
+                            <span class="${freshClass}">Last updated: ${data.last_updated} (${Math.round(data.age_hours)} hours ago)</span>
+                            <button onclick="refreshData('${data.city}')" class="refresh-button">Refresh</button>
+                        </div>`;
+                    }
+                    
+                    // Update query data status if it's for the city in the query
+                    const queryCity = document.getElementById('query').value.toLowerCase();
+                    if (queryCity.includes(city.toLowerCase())) {
+                        document.getElementById('query-data-status').innerHTML = statusHTML;
+                    }
+                    
+                    // Add to data status container in the Data tab
+                    if (document.getElementById('data-status-container').innerHTML.includes('Loading')) {
+                        document.getElementById('data-status-container').innerHTML = statusHTML;
+                    } else {
+                        document.getElementById('data-status-container').innerHTML += statusHTML;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error checking data status:', error);
+                });
+        }
+        
+        function loadAllDataStatus() {
+            document.getElementById('data-status-container').innerHTML = 'Loading data status...';
+            checkDataStatus('Mumbai');
+            checkDataStatus('Bangalore');
+            checkDataStatus('Delhi');
+        }
+        
+        function refreshData(city) {
+            const statusDiv = document.getElementById('refresh-status');
+            statusDiv.innerHTML = `<p>Refreshing data for ${city}...</p>`;
+            
+            fetch('/refresh_data', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ cities: [city] })
+            })
+            .then(response => response.json())
+            .then(data => {
+                statusDiv.innerHTML = `<p>${data.message}</p>`;
+                // After a few seconds, check the data status again
+                setTimeout(() => {
+                    loadAllDataStatus();
+                }, 2000);
+            })
+            .catch(error => {
+                statusDiv.innerHTML = `<p>Error: ${error.message}</p>`;
+            });
+        }
+        
+        function refreshAllData() {
+            const statusDiv = document.getElementById('refresh-status');
+            statusDiv.innerHTML = '<p>Refreshing data for all cities...</p>';
+            
+            fetch('/refresh_data', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ cities: ['Mumbai', 'Bangalore', 'Delhi'] })
+            })
+            .then(response => response.json())
+            .then(data => {
+                statusDiv.innerHTML = `<p>${data.message}</p>`;
+                // After a few seconds, check the data status again
+                setTimeout(() => {
+                    loadAllDataStatus();
+                }, 2000);
+            })
+            .catch(error => {
+                statusDiv.innerHTML = `<p>Error: ${error.message}</p>`;
+            });
+        }
+    </script>
+</body>
+</html>
+        

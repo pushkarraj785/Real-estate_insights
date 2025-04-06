@@ -1,0 +1,11 @@
+state,rera_registered_projects,rera_registered_agents,rera_cases_disposed,rera_authority_status,rera_appellate_tribunal,rera_web_portal,source
+Andhra Pradesh,2420,154,158,Permanent,Permanent,Setup,data.gov.in_rera_api
+Arunachal Pradesh,0,0,0,Interim,Not Established,Not Setup,data.gov.in_rera_api
+Assam,464,38,21,Permanent,Permanent,Setup,data.gov.in_rera_api
+Bihar,1305,415,1154,Permanent,Permanent,Setup,data.gov.in_rera_api
+Chhattisgarh,1378,646,1424,Permanent,Permanent,Setup,data.gov.in_rera_api
+Goa,847,336,131,Permanent,Permanent,Setup,data.gov.in_rera_api
+Gujarat,9818,1869,3367,Permanent,Permanent,Setup,data.gov.in_rera_api
+Haryana,965,2812,18383,Permanent,Permanent,Setup,data.gov.in_rera_api
+Himachal Pradesh,101,113,44,Permanent,Permanent,Setup,data.gov.in_rera_api
+Jharkhand,821,7,93,Permanent,Permanent,Setup,data.gov.in_rera_api

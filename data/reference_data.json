@@ -1,0 +1,203 @@
+{
+  "Mumbai": {
+    "localities": {
+      "Andheri": {
+        "price_range": [
+          15000,
+          25000
+        ],
+        "popularity": 0.2
+      },
+      "Bandra": {
+        "price_range": [
+          30000,
+          50000
+        ],
+        "popularity": 0.15
+      },
+      "Worli": {
+        "price_range": [
+          35000,
+          60000
+        ],
+        "popularity": 0.1
+      },
+      "Powai": {
+        "price_range": [
+          20000,
+          35000
+        ],
+        "popularity": 0.12
+      },
+      "Juhu": {
+        "price_range": [
+          35000,
+          55000
+        ],
+        "popularity": 0.08
+      },
+      "Malad": {
+        "price_range": [
+          15000,
+          25000
+        ],
+        "popularity": 0.1
+      },
+      "Goregaon": {
+        "price_range": [
+          18000,
+          28000
+        ],
+        "popularity": 0.1
+      },
+      "Borivali": {
+        "price_range": [
+          16000,
+          26000
+        ],
+        "popularity": 0.15
+      }
+    },
+    "area_range": [
+      600,
+      2500
+    ],
+    "trends": {
+      "monthly_appreciation": 0.005
+    }
+  },
+  "Delhi": {
+    "localities": {
+      "Vasant Kunj": {
+        "price_range": [
+          12000,
+          22000
+        ],
+        "popularity": 0.15
+      },
+      "Dwarka": {
+        "price_range": [
+          9000,
+          15000
+        ],
+        "popularity": 0.2
+      },
+      "Rohini": {
+        "price_range": [
+          8000,
+          14000
+        ],
+        "popularity": 0.1
+      },
+      "Greater Kailash": {
+        "price_range": [
+          15000,
+          30000
+        ],
+        "popularity": 0.1
+      },
+      "South Extension": {
+        "price_range": [
+          18000,
+          35000
+        ],
+        "popularity": 0.08
+      },
+      "Mayur Vihar": {
+        "price_range": [
+          10000,
+          18000
+        ],
+        "popularity": 0.12
+      },
+      "Noida": {
+        "price_range": [
+          6000,
+          12000
+        ],
+        "popularity": 0.15
+      },
+      "Gurgaon": {
+        "price_range": [
+          8000,
+          18000
+        ],
+        "popularity": 0.1
+      }
+    },
+    "area_range": [
+      700,
+      2800
+    ],
+    "trends": {
+      "monthly_appreciation": 0.004
+    }
+  },
+  "Bangalore": {
+    "localities": {
+      "Koramangala": {
+        "price_range": [
+          9000,
+          15000
+        ],
+        "popularity": 0.15
+      },
+      "HSR Layout": {
+        "price_range": [
+          8000,
+          14000
+        ],
+        "popularity": 0.12
+      },
+      "Indiranagar": {
+        "price_range": [
+          10000,
+          18000
+        ],
+        "popularity": 0.15
+      },
+      "Whitefield": {
+        "price_range": [
+          6000,
+          10000
+        ],
+        "popularity": 0.2
+      },
+      "Electronic City": {
+        "price_range": [
+          5000,
+          9000
+        ],
+        "popularity": 0.1
+      },
+      "Jayanagar": {
+        "price_range": [
+          9000,
+          15000
+        ],
+        "popularity": 0.08
+      },
+      "Sarjapur Road": {
+        "price_range": [
+          7000,
+          12000
+        ],
+        "popularity": 0.1
+      },
+      "Hebbal": {
+        "price_range": [
+          7500,
+          13000
+        ],
+        "popularity": 0.1
+      }
+    },
+    "area_range": [
+      750,
+      2600
+    ],
+    "trends": {
+      "monthly_appreciation": 0.006
+    }
+  }
+}

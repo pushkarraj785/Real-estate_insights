@@ -1,0 +1,18 @@
+# Install setuptools first to provide distutils
+setuptools>=65.5.0
+wheel>=0.38.0
+# Use NumPy 1.26.0 or newer which has Python 3.12 support
+numpy>=1.26.0
+# Update pandas to a version compatible with newer NumPy
+pandas>=2.0.3
+requests==2.31.0
+beautifulsoup4==4.12.2
+# Specify the httpx version you have installed
+httpx>=0.28.0
+# Google's Gemini AI client
+google-generativeai>=0.3.1
+flask==2.3.3
+python-dotenv==1.0.0
+# Additional libraries for data collection and scheduling
+schedule>=1.2.0
+lxml>=4.9.2
